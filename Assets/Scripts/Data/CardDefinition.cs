@@ -33,10 +33,10 @@ public class CardDefinition
     public SpecialType SpecialType { get; }
 
     // constructor for number cards
-    public CardDefinition(string name, CardType type, int? number = null)
+    public CardDefinition(string name, int? number = null)
     {
         Name = name;
-        Type = type;
+        Type = CardType.Number;
         Number = number;
     }
 
