@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 
 public class Deck
 {
     private List<Card> _cards = new List<Card>();
     private List<Card> _discardPile = new List<Card>();
-    private Random _random = new Random();
+    private System.Random _random = new System.Random();
 
     public Deck()
     {
