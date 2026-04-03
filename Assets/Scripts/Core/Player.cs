@@ -54,6 +54,51 @@ public class Player
         return discarded;
     }
 
+    public int HandScore()
+    {
+        int score = 0;
+        bool existTimesTwo = false;
+
+        foreach (Card card in Hand)
+        {
+            if (card.Type == CardType.Special) continue;
+
+            if (card.Type == CardType.Number)
+            {
+                score += card.Number;
+                continue;
+            }
+
+            if (card.Type == CardType.Multiplier)
+            {
+                switch (card.Definition.MultiplierType)
+                {
+                    case CardDefinition.MultiplierType.PlusTwo:
+                        score += 2;
+                        break;
+                    case CardDefinition.MultiplierType.PlusFour:
+                        score += 4;
+                        break;
+                    case CardDefinition.MultiplierType.PlusSix:
+                        score += 6;
+                        break;
+                    case CardDefinition.MultiplierType.PlusEight:
+                        score += 8;
+                        break;
+                    case CardDefinition.MultiplierType.PlusTen:
+                        score += 10;
+                        break;
+                    case CardDefinition.MultiplierType.TimesTwo:
+                        existTimesTwo = true;
+                        break;
+                }
+                continue;
+            }
+        }
+
+        return (existTimesTwo) ? score * 2 : score;
+    }
+
     public void ResetStatus()
     {
         Status = PlayerStatus.Active;
