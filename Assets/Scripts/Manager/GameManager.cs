@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
         {
             var Player = new Player($"Player{i + 1}");
             _players.Add(Player);
-            _scores[player] = 0;
+            _scores[Player] = 0;
         }
 
         _currentPlayerIndex = 0;

@@ -65,7 +65,7 @@ public class Player
 
             if (card.Type == CardType.Number)
             {
-                score += card.Number;
+                score += card.Number.Value;
                 continue;
             }
 
@@ -73,22 +73,22 @@ public class Player
             {
                 switch (card.Definition.MultiplierType)
                 {
-                    case CardDefinition.MultiplierType.PlusTwo:
+                    case MultiplierType.PlusTwo:
                         score += 2;
                         break;
-                    case CardDefinition.MultiplierType.PlusFour:
+                    case MultiplierType.PlusFour:
                         score += 4;
                         break;
-                    case CardDefinition.MultiplierType.PlusSix:
+                    case MultiplierType.PlusSix:
                         score += 6;
                         break;
-                    case CardDefinition.MultiplierType.PlusEight:
+                    case MultiplierType.PlusEight:
                         score += 8;
                         break;
-                    case CardDefinition.MultiplierType.PlusTen:
+                    case MultiplierType.PlusTen:
                         score += 10;
                         break;
-                    case CardDefinition.MultiplierType.TimesTwo:
+                    case MultiplierType.TimesTwo:
                         existTimesTwo = true;
                         break;
                 }
