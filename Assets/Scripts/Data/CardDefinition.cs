@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public enum CardType
 {
     Number,         // number card
@@ -29,8 +27,8 @@ public class CardDefinition
     public string Name { get; }
     public CardType Type { get; }
     public int? Number { get; }
-    public MultiplierType MultiplierType { get; }
-    public SpecialType SpecialType { get; }
+    public MultiplierType? Multiplier { get; }
+    public SpecialType? Special { get; }
 
     // constructor for number cards
     public CardDefinition(string name, int? number = null)
@@ -45,14 +43,14 @@ public class CardDefinition
     {
         Name = name;
         Type = CardType.Multiplier;
-        MultiplierType = multiplier;
+        Multiplier = multiplier;
     }
 
-    // constructor for number cards
+    // constructor for special cards
     public CardDefinition(string name, SpecialType special)
     {
         Name = name;
         Type = CardType.Special;
-        SpecialType = special;
+        Special = special;
     }
 }

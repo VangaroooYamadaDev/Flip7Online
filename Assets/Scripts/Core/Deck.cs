@@ -37,8 +37,8 @@ public class Deck
         // special cards
         for (int i=0; i < 3; i++)
         {
-            _cards.Add(new Card(new CardDefinition("freeze", SpecialType.Freeze)));
             _cards.Add(new Card(new CardDefinition("flip three", SpecialType.FlipThree)));
+            _cards.Add(new Card(new CardDefinition("freeze", SpecialType.Freeze)));
             _cards.Add(new Card(new CardDefinition("second chance", SpecialType.SecondChance)));
         }
     }

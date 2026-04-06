@@ -46,6 +46,13 @@ public class Player
         Status = PlayerStatus.Flip7;
     }
 
+    public Card DiscardLast()
+    {
+        Card last = Hand[Hand.Count - 1];
+        Hand.RemoveAt(Hand.Count - 1);
+        return last;
+    }
+
     public List<Card> DiscardHand()
     {
         var discarded = new List<Card>(Hand);
@@ -57,6 +64,7 @@ public class Player
     public int HandScore()
     {
         int score = 0;
+        int additional = 0;
         bool existTimesTwo = false;
 
         foreach (Card card in Hand)
@@ -71,22 +79,22 @@ public class Player
 
             if (card.Type == CardType.Multiplier)
             {
-                switch (card.Definition.MultiplierType)
+                switch (card.Definition.Multiplier.Value)
                 {
                     case MultiplierType.PlusTwo:
-                        score += 2;
+                        additional += 2;
                         break;
                     case MultiplierType.PlusFour:
-                        score += 4;
+                        additional += 4;
                         break;
                     case MultiplierType.PlusSix:
-                        score += 6;
+                        additional += 6;
                         break;
                     case MultiplierType.PlusEight:
-                        score += 8;
+                        additional += 8;
                         break;
                     case MultiplierType.PlusTen:
-                        score += 10;
+                        additional += 10;
                         break;
                     case MultiplierType.TimesTwo:
                         existTimesTwo = true;
@@ -96,7 +104,23 @@ public class Player
             }
         }
 
-        return (existTimesTwo) ? score * 2 : score;
+        if (existTimesTwo) score *= 2;
+        score += additional;
+
+        return score;
+    }
+
+    public bool HasSecondChance()
+    {
+        return Hand.Find(c => c.Definition.Special == SpecialType.SecondChance) != null;
+    }
+
+    public List<Card> UseSecondChance(Card burstCard)
+    {
+        Card secondChance = Hand.Find(c => c.Definition.Special == SpecialType.SecondChance);
+        Hand.Remove(secondChance);
+        Hand.Remove(burstCard);
+        return new List<Card> { secondChance, burstCard };
     }
 
     public void ResetStatus()
