@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,7 +8,8 @@ public class GameManager : MonoBehaviour
     private Deck _deck;
     private int _currentPlayerIndex;
     private Dictionary<Player, int> _scores = new Dictionary<Player, int>();
-    private const int FLIP7BONUS = 15;
+    private const int Flip7Bonus = 15;
+    private const int ClearScore = 200;
 
     [SerializeField]
     private int _playerCount = 3;
@@ -42,7 +44,7 @@ public class GameManager : MonoBehaviour
         DrawCardForPlayer(_players[_currentPlayerIndex]);
     }
 
-    public void DrawCardForPlayer(Player player)
+    private void DrawCardForPlayer(Player player)
     {
         Card drawnCard = _deck.Draw();
         if (drawnCard.Definition.Special == SpecialType.SecondChance
@@ -84,7 +86,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void RetirePlayer(Player player)
+    private void RetirePlayer(Player player)
     {
         _scores[player] += player.HandScore();
         _deck.DiscardRange(player.DiscardHand());
@@ -116,6 +118,28 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
+    [ContextMenu("DRAW CARD")]
+    public void DebugDraw()
+    {
+        DrawCard();
+        TurnFlow();
+    }
+
+    [ContextMenu("FOLD")]
+    public void DebugFold()
+    {
+        Fold();
+        TurnFlow();
+    }
+
+    private void TurnFlow()
+    {
+        if (CheckRoundEnd())
+            EndRound();
+        else
+            NextTurn();
+    }
+
     private void CheckBurst(Player player)
     {
         Card lastCard = player.Hand[player.Hand.Count - 1];
@@ -132,6 +156,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 player.Burst();
+                _deck.DiscardRange(player.DiscardHand());
                 return;
             }
         }
@@ -148,7 +173,7 @@ public class GameManager : MonoBehaviour
         // FLIP7!
         player.Flip7();
         RetirePlayer(player);
-        _scores[player] += FLIP7BONUS;
+        _scores[player] += Flip7Bonus;
 
         foreach (Player other in _players.FindAll(p => p.IsActive))
         {
@@ -156,5 +181,46 @@ public class GameManager : MonoBehaviour
             RetirePlayer(other);
         }
         return;
+    }
+
+    private bool CheckRoundEnd()
+    {
+        return _players.All(p => !p.IsActive);
+    }
+
+    private bool CheckGameEnd()
+    {
+        return _scores.Any(p => p.Value >= ClearScore);
+    }
+
+    private void NextTurn()
+    {
+        do
+        {
+            _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
+        } while (!_players[_currentPlayerIndex].IsActive);
+    }
+
+    private void EndRound()
+    {
+        if (CheckGameEnd())
+        {
+            // End Game Process
+            Debug.Log("Game Over!");
+        }
+        else
+        {
+            // Continue Round Process
+            foreach (Player player in _players)
+            {
+                player.ResetStatus();
+            }
+
+            for (int i = 0; i < _players.Count; i++)
+            {
+                _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
+                DrawCard();
+            }
+        }
     }
 }
