@@ -76,11 +76,9 @@ public class GameManager : MonoBehaviour
                     {
                         DrawCardForPlayer(_players[_flipThreeTargetIndex]);
                     }
-                    _deck.Discard(player.DiscardLast());
                     break;
                 case SpecialType.Freeze:
                     Freeze(_players[_freezeTargetIndex]);
-                    _deck.Discard(player.DiscardLast());
                     break;
             }
         }
@@ -94,7 +92,6 @@ public class GameManager : MonoBehaviour
     private void RetirePlayer(Player player)
     {
         _scores[player] += player.HandScore();
-        _deck.DiscardRange(player.DiscardHand());
     }
 
     public void Fold()
@@ -161,7 +158,6 @@ public class GameManager : MonoBehaviour
             else
             {
                 player.Burst();
-                _deck.DiscardRange(player.DiscardHand());
                 return;
             }
         }
@@ -218,6 +214,7 @@ public class GameManager : MonoBehaviour
             // Continue Round Process
             foreach (Player player in _players)
             {
+                _deck.DiscardRange(player.DiscardHand());
                 player.ResetStatus();
             }
 
