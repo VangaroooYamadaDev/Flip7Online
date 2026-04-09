@@ -37,6 +37,11 @@ public class GameManager : MonoBehaviour
         }
 
         _currentPlayerIndex = 0;
+        for (int i = 0; i < _players.Count; i++)
+        {
+            DrawCard();
+            _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
+        }
     }
 
     public void DrawCard()
