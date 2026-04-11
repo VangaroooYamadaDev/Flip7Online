@@ -74,10 +74,12 @@ public class GameManager : MonoBehaviour
                 case SpecialType.FlipThree:
                     for (int i = 0; i < 3; i++)
                     {
+                        if (_players[_flipThreeTargetIndex].IsActive)
                         DrawCardForPlayer(_players[_flipThreeTargetIndex]);
                     }
                     break;
                 case SpecialType.Freeze:
+                    if (_players[_freezeTargetIndex].IsActive)
                     Freeze(_players[_freezeTargetIndex]);
                     break;
             }
