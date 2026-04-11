@@ -226,4 +226,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e06241a436de29644a615786a3d0c5b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardUIView
-  _cardNameText: {fileID: 0}
+  _cardNameText: {fileID: 5510878082178599175}
