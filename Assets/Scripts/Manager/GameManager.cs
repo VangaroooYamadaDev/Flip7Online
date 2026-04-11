@@ -25,6 +25,23 @@ public class GameManager : MonoBehaviour
         InitializeGame();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log($"CurrentPlayer: {_players[_currentPlayerIndex].Name}");
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            foreach (Player player in _players)
+            {
+                Debug.Log($"--{player.Name}:{player.Status}---[{_scores[player]}]-----");
+                Debug.Log($"DECK: {string.Join(" ", player.Hand.Select(c => c.Name))}");
+            }
+        }
+    }
+
     private void InitializeGame()
     {
         _deck = new Deck();
@@ -52,6 +69,7 @@ public class GameManager : MonoBehaviour
     private void DrawCardForPlayer(Player player)
     {
         Card drawnCard = _deck.Draw();
+        Debug.Log($"DrawCardForPlayer: {player.Name} drew {drawnCard.Name}");
         if (drawnCard.Definition.Special == SpecialType.SecondChance
             && player.HasSecondChance())
         {
@@ -75,12 +93,12 @@ public class GameManager : MonoBehaviour
                     for (int i = 0; i < 3; i++)
                     {
                         if (_players[_flipThreeTargetIndex].IsActive)
-                        DrawCardForPlayer(_players[_flipThreeTargetIndex]);
+                            DrawCardForPlayer(_players[_flipThreeTargetIndex]);
                     }
                     break;
                 case SpecialType.Freeze:
                     if (_players[_freezeTargetIndex].IsActive)
-                    Freeze(_players[_freezeTargetIndex]);
+                        Freeze(_players[_freezeTargetIndex]);
                     break;
             }
         }
@@ -125,7 +143,9 @@ public class GameManager : MonoBehaviour
     [ContextMenu("DRAW CARD")]
     public void DebugDraw()
     {
+        Debug.Log("DEBUG DRAW CALLED");
         DrawCard();
+        Debug.Log("TURN FLOW CALLED");
         TurnFlow();
     }
 
@@ -138,6 +158,7 @@ public class GameManager : MonoBehaviour
 
     private void TurnFlow()
     {
+        Debug.Log($"CHECK ROUND END: {CheckRoundEnd()}");
         if (CheckRoundEnd())
             EndRound();
         else
@@ -154,11 +175,13 @@ public class GameManager : MonoBehaviour
         {
             if (player.HasSecondChance())
             {
+                Debug.Log($"****{player.Name} use SecondChance****");
                 player.UseSecondChance(lastCard);
                 return;
             }
             else
             {
+                Debug.Log($"****{player.Name} BURST****");
                 player.Burst();
                 return;
             }
@@ -174,6 +197,7 @@ public class GameManager : MonoBehaviour
             return;
 
         // FLIP7!
+        Debug.Log($"****{player.Name} FLIP 7!****");
         player.Flip7();
         RetirePlayer(player);
         _scores[player] += Flip7Bonus;
