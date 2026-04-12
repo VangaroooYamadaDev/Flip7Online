@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int _secondChanceTargetIndex = 0;
 
+    [SerializeField]
+    private UIManager _uiManager;
+
     private void Start()
     {
         InitializeGame();

@@ -6,6 +6,13 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject _cardUIPrefab;
 
+    [SerializeField]
+    private Transform _player1HandArea;
+    [SerializeField]
+    private Transform _player2HandArea;
+    [SerializeField]
+    private Transform _player3HandArea;
+
     public void UpdatePlayerHand(Player player, Transform handArea)
     {
         // Clear player's hand area
