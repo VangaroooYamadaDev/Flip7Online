@@ -28,4 +28,11 @@ public class UIManager : MonoBehaviour
             cardObj.GetComponent<CardUIView>().Setup(card);
         }
     }
+
+    public void UpdateAllHands(List<Player> players)
+    {
+        UpdatePlayerHand(players[0], _player1HandArea);
+        UpdatePlayerHand(players[1], _player2HandArea);
+        UpdatePlayerHand(players[2], _player3HandArea);
+    }
 }

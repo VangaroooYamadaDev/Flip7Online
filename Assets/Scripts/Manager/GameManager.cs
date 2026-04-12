@@ -62,6 +62,8 @@ public class GameManager : MonoBehaviour
             DrawCard();
             _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
         }
+
+        _uiManager.UpdateAllHands(_players);
     }
 
     public void DrawCard()
@@ -148,6 +150,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("DEBUG DRAW CALLED");
         DrawCard();
+        _uiManager.UpdateAllHands(_players);
         Debug.Log("TURN FLOW CALLED");
         TurnFlow();
     }
@@ -254,6 +257,8 @@ public class GameManager : MonoBehaviour
             }
 
             _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
+
+            _uiManager.UpdateAllHands(_players);
         }
     }
 }
