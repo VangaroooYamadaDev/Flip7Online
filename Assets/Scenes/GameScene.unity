@@ -150,6 +150,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   _cardUIPrefab: {fileID: 0}
   _player1HandArea: {fileID: 547413524}
+  _player2HandArea: {fileID: 2021786164}
+  _player3HandArea: {fileID: 888095176}
 --- !u!4 &311661782
 Transform:
   m_ObjectHideFlags: 0
