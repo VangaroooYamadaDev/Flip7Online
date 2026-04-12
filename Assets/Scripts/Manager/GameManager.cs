@@ -92,25 +92,53 @@ public class GameManager : MonoBehaviour
 
         if (drawnCard.Type == CardType.Special)
         {
-            switch (drawnCard.Definition.Special)
-            {
-                case SpecialType.FlipThree:
-                    for (int i = 0; i < 3; i++)
-                    {
-                        if (_players[_flipThreeTargetIndex].IsActive)
-                            DrawCardForPlayer(_players[_flipThreeTargetIndex]);
-                    }
-                    break;
-                case SpecialType.Freeze:
-                    if (_players[_freezeTargetIndex].IsActive)
-                        Freeze(_players[_freezeTargetIndex]);
-                    break;
-            }
+            ProcessSpecialCard(drawnCard);
         }
         else
         {
             CheckBurst(player);
             CheckFlip7(player);
+        }
+    }
+
+    private void ProcessSpecialCard(Card card)
+    {
+        switch (card.Definition.Special)
+        {
+            case SpecialType.FlipThree:
+                List<Card> pendingSpecials = new List<Card>();
+                Player flipTarget = _players[_flipThreeTargetIndex];
+
+                for (int i = 0; i < 3; i++)
+                {
+                    if (!flipTarget.IsActive) break;
+
+                    Card flipCard = _deck.Draw();
+                    flipTarget.AddCard(flipCard);
+
+                    if (flipCard.Type == CardType.Special)
+                    {
+                        pendingSpecials.Add(flipCard);
+                    }
+                    else
+                    {
+                        CheckBurst(flipTarget);
+                        CheckFlip7(flipTarget);
+                    }
+                }
+
+                if (flipTarget.IsActive)
+                {
+                    foreach (Card specialCard in pendingSpecials)
+                    {
+                        ProcessSpecialCard(specialCard);
+                    }
+                }
+                break;
+            case SpecialType.Freeze:
+                if (_players[_freezeTargetIndex].IsActive)
+                    DrawCardForPlayer(_players[_freezeTargetIndex]);
+                break;
         }
     }
 
@@ -159,6 +187,14 @@ public class GameManager : MonoBehaviour
     public void DebugFold()
     {
         Fold();
+        TurnFlow();
+    }
+
+    [ContextMenu("DEBUG FLIP THREE")]
+    public void DebugFlipThree()
+    {
+        ProcessSpecialCard(new Card(new CardDefinition("FLIP THREE", SpecialType.FlipThree)));
+        _uiManager.UpdateAllHands(_players);
         TurnFlow();
     }
 
