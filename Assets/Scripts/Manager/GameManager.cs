@@ -137,7 +137,7 @@ public class GameManager : MonoBehaviour
                 break;
             case SpecialType.Freeze:
                 if (_players[_freezeTargetIndex].IsActive)
-                    DrawCardForPlayer(_players[_freezeTargetIndex]);
+                    Freeze(_players[_freezeTargetIndex]);
                 break;
         }
     }
