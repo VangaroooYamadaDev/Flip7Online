@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
 
         if (drawnCard.Type == CardType.Special)
         {
-            ProcessSpecialCard(drawnCard);
+            ProcessSpecialCard(drawnCard, player);
         }
         else
         {
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ProcessSpecialCard(Card card)
+    private void ProcessSpecialCard(Card card, Player player)
     {
         switch (card.Definition.Special)
         {
@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
                 {
                     foreach (Card specialCard in pendingSpecials)
                     {
-                        ProcessSpecialCard(specialCard);
+                        ProcessSpecialCard(specialCard, flipTarget);
                     }
                 }
                 break;
@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
     [ContextMenu("DEBUG FLIP THREE")]
     public void DebugFlipThree()
     {
-        ProcessSpecialCard(new Card(new CardDefinition("FLIP THREE", SpecialType.FlipThree)));
+        ProcessSpecialCard(new Card(new CardDefinition("FLIP THREE", SpecialType.FlipThree)), _players[_currentPlayerIndex]);
         _uiManager.UpdateAllStatuses(_players);
         _uiManager.UpdateAllHands(_players);
         TurnFlow();
