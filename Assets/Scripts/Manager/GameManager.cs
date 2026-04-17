@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
             _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
         }
 
+        _uiManager.UpdateAllStatuses(_players);
         _uiManager.UpdateAllHands(_players);
     }
 
@@ -178,6 +179,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("DEBUG DRAW CALLED");
         DrawCard();
+        _uiManager.UpdateAllStatuses(_players);
         _uiManager.UpdateAllHands(_players);
         Debug.Log("TURN FLOW CALLED");
         TurnFlow();
@@ -194,6 +196,7 @@ public class GameManager : MonoBehaviour
     public void DebugFlipThree()
     {
         ProcessSpecialCard(new Card(new CardDefinition("FLIP THREE", SpecialType.FlipThree)));
+        _uiManager.UpdateAllStatuses(_players);
         _uiManager.UpdateAllHands(_players);
         TurnFlow();
     }
@@ -294,6 +297,7 @@ public class GameManager : MonoBehaviour
 
             _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
 
+            _uiManager.UpdateAllStatuses(_players);
             _uiManager.UpdateAllHands(_players);
         }
     }
