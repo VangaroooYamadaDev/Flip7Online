@@ -59,8 +59,12 @@ public class GameManager : MonoBehaviour
         _currentPlayerIndex = 0;
         for (int i = 0; i < _players.Count; i++)
         {
-            DrawCard();
-            _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
+            if (_players[_currentPlayerIndex].IsActive)
+                DrawCard();
+            _uiManager.UpdateAllStatuses(_players);
+            _uiManager.UpdateAllScores(_players, _scores);
+            _uiManager.UpdateAllHands(_players);
+            TurnFlow();
         }
 
         _uiManager.UpdateAllStatuses(_players);
@@ -310,13 +314,17 @@ public class GameManager : MonoBehaviour
                 player.ResetStatus();
             }
 
+            _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
+
             for (int i = 0; i < _players.Count; i++)
             {
-                _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
-                DrawCard();
+                if (_players[_currentPlayerIndex].IsActive)
+                    DrawCard();
+                _uiManager.UpdateAllStatuses(_players);
+                _uiManager.UpdateAllScores(_players, _scores);
+                _uiManager.UpdateAllHands(_players);
+                TurnFlow();
             }
-
-            _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
 
             _uiManager.UpdateAllStatuses(_players);
             _uiManager.UpdateAllScores(_players, _scores);
