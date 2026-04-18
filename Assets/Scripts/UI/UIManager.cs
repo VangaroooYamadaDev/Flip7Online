@@ -8,11 +8,11 @@ public class UIManager : MonoBehaviour
     private GameObject _cardUIPrefab;
 
     [SerializeField]
-    private Transform _player1HandArea;
+    private Transform _player1CardContainer;
     [SerializeField]
-    private Transform _player2HandArea;
+    private Transform _player2CardContainer;
     [SerializeField]
-    private Transform _player3HandArea;
+    private Transform _player3CardContainer;
 
     [SerializeField]
     private TextMeshProUGUI _player1StatusText;
@@ -26,10 +26,10 @@ public class UIManager : MonoBehaviour
         statusText.text = $"{player.Name}: {player.Status}";
     }
 
-    public void UpdatePlayerHand(Player player, Transform handArea)
+    public void UpdatePlayerHand(Player player, Transform cardContainer)
     {
         // Clear player's hand area
-        foreach (Transform child in handArea)
+        foreach (Transform child in cardContainer)
         {
             Destroy(child.gameObject);
         }
@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
         // Recreate hand area
         foreach (Card card in player.Hand)
         {
-            GameObject cardObj = Instantiate(_cardUIPrefab, handArea);
+            GameObject cardObj = Instantiate(_cardUIPrefab, cardContainer);
             cardObj.GetComponent<CardUIView>().Setup(card);
         }
     }
@@ -51,8 +51,8 @@ public class UIManager : MonoBehaviour
 
     public void UpdateAllHands(List<Player> players)
     {
-        UpdatePlayerHand(players[0], _player1HandArea);
-        UpdatePlayerHand(players[1], _player2HandArea);
-        UpdatePlayerHand(players[2], _player3HandArea);
+        UpdatePlayerHand(players[0], _player1CardContainer);
+        UpdatePlayerHand(players[1], _player2CardContainer);
+        UpdatePlayerHand(players[2], _player3CardContainer);
     }
 }
