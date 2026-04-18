@@ -61,6 +61,11 @@ public class Player
         return discarded;
     }
 
+    public void RemoveCard(Card card)
+    {
+        Hand.Remove(card);
+    }
+
     public int HandScore()
     {
         int score = 0;

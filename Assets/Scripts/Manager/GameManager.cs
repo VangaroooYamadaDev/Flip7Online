@@ -91,7 +91,8 @@ public class GameManager : MonoBehaviour
             player.AddCard(drawnCard);
         }
 
-        if (drawnCard.Type == CardType.Special)
+        if (drawnCard.Type == CardType.Special
+            && drawnCard.Definition.Special != SpecialType.SecondChance)
         {
             ProcessSpecialCard(drawnCard, player);
         }
@@ -139,6 +140,19 @@ public class GameManager : MonoBehaviour
             case SpecialType.Freeze:
                 if (_players[_freezeTargetIndex].IsActive)
                     Freeze(_players[_freezeTargetIndex]);
+                break;
+            case SpecialType.SecondChance:
+                if (!player.HasSecondChance())
+                    break;
+
+                player.RemoveCard(player.Hand.Find(c => c.Definition.Special == SpecialType.SecondChance));
+
+                // If the currentPlayer already has SecondChance, give away to other player
+                Player target = FindSecondChanceTarget();
+                if (target != null)
+                    target.AddCard(card);
+                else
+                    _deck.Discard(card);
                 break;
         }
     }
