@@ -61,12 +61,14 @@ public class GameManager : MonoBehaviour
         {
             if (_players[_currentPlayerIndex].IsActive)
                 DrawCard();
+            _uiManager.UpdateDeckCount(_deck.Count);
             _uiManager.UpdateAllStatuses(_players);
             _uiManager.UpdateAllScores(_players, _scores);
             _uiManager.UpdateAllHands(_players);
             TurnFlow();
         }
 
+        _uiManager.UpdateDeckCount(_deck.Count);
         _uiManager.UpdateAllStatuses(_players);
         _uiManager.UpdateAllScores(_players, _scores);
         _uiManager.UpdateAllHands(_players);
@@ -201,7 +203,9 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("DEBUG DRAW CALLED");
         DrawCard();
+        _uiManager.UpdateDeckCount(_deck.Count);
         _uiManager.UpdateAllStatuses(_players);
+        _uiManager.UpdateAllScores(_players, _scores);
         _uiManager.UpdateAllHands(_players);
         Debug.Log("TURN FLOW CALLED");
         TurnFlow();
@@ -211,6 +215,7 @@ public class GameManager : MonoBehaviour
     public void DebugFold()
     {
         Fold();
+        _uiManager.UpdateDeckCount(_deck.Count);
         _uiManager.UpdateAllStatuses(_players);
         _uiManager.UpdateAllScores(_players, _scores);
         _uiManager.UpdateAllHands(_players);
@@ -221,6 +226,7 @@ public class GameManager : MonoBehaviour
     public void DebugFlipThree()
     {
         ProcessSpecialCard(new Card(new CardDefinition("FLIP THREE", SpecialType.FlipThree)), _players[_currentPlayerIndex]);
+        _uiManager.UpdateDeckCount(_deck.Count);
         _uiManager.UpdateAllStatuses(_players);
         _uiManager.UpdateAllScores(_players, _scores);
         _uiManager.UpdateAllHands(_players);
@@ -324,12 +330,14 @@ public class GameManager : MonoBehaviour
             {
                 if (_players[_currentPlayerIndex].IsActive)
                     DrawCard();
+                _uiManager.UpdateDeckCount(_deck.Count);
                 _uiManager.UpdateAllStatuses(_players);
                 _uiManager.UpdateAllScores(_players, _scores);
                 _uiManager.UpdateAllHands(_players);
                 TurnFlow();
             }
 
+            _uiManager.UpdateDeckCount(_deck.Count);
             _uiManager.UpdateAllStatuses(_players);
             _uiManager.UpdateAllScores(_players, _scores);
             _uiManager.UpdateAllHands(_players);

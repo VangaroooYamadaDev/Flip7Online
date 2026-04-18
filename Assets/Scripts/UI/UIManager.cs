@@ -8,6 +8,9 @@ public class UIManager : MonoBehaviour
     private GameObject _cardUIPrefab;
 
     [SerializeField]
+    private TextMeshProUGUI _deckCountText;
+
+    [SerializeField]
     private Transform _player1CardContainer;
     [SerializeField]
     private Transform _player2CardContainer;
@@ -35,6 +38,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject _player3TurnIndicator;
 
+    public void UpdateDeckCount(int count)
+    {
+        _deckCountText.text = $"DECK LEFT: {count}";
+    }
 
     public void UpdatePlayerStatus(Player player, TextMeshProUGUI statusText)
     {
