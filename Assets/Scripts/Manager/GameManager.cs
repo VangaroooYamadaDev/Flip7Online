@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
         }
 
         _uiManager.UpdateAllStatuses(_players);
+        _uiManager.UpdateAllScores(_players, _scores);
         _uiManager.UpdateAllHands(_players);
     }
 
@@ -160,6 +161,7 @@ public class GameManager : MonoBehaviour
     private void RetirePlayer(Player player)
     {
         _scores[player] += player.HandScore();
+        _uiManager.UpdateAllScores(_players, _scores);
     }
 
     public void Fold()
@@ -204,6 +206,7 @@ public class GameManager : MonoBehaviour
     {
         Fold();
         _uiManager.UpdateAllStatuses(_players);
+        _uiManager.UpdateAllScores(_players, _scores);
         _uiManager.UpdateAllHands(_players);
         TurnFlow();
     }
@@ -213,6 +216,7 @@ public class GameManager : MonoBehaviour
     {
         ProcessSpecialCard(new Card(new CardDefinition("FLIP THREE", SpecialType.FlipThree)), _players[_currentPlayerIndex]);
         _uiManager.UpdateAllStatuses(_players);
+        _uiManager.UpdateAllScores(_players, _scores);
         _uiManager.UpdateAllHands(_players);
         TurnFlow();
     }
@@ -294,6 +298,7 @@ public class GameManager : MonoBehaviour
         if (CheckGameEnd())
         {
             // End Game Process
+            _uiManager.UpdateAllScores(_players, _scores);
             Debug.Log("Game Over!");
         }
         else
@@ -314,6 +319,7 @@ public class GameManager : MonoBehaviour
             _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
 
             _uiManager.UpdateAllStatuses(_players);
+            _uiManager.UpdateAllScores(_players, _scores);
             _uiManager.UpdateAllHands(_players);
         }
     }

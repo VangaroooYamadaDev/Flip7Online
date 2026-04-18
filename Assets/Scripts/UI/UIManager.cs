@@ -21,9 +21,21 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _player3StatusText;
 
+    [SerializeField]
+    private TextMeshProUGUI _player1ScoreText;
+    [SerializeField]
+    private TextMeshProUGUI _player2ScoreText;
+    [SerializeField]
+    private TextMeshProUGUI _player3ScoreText;
+
     public void UpdatePlayerStatus(Player player, TextMeshProUGUI statusText)
     {
         statusText.text = $"{player.Name}: {player.Status}";
+    }
+
+    public void UpdatePlayerScore(Player player, int score, TextMeshProUGUI scoreText)
+    {
+        scoreText.text = $"{score}pt";
     }
 
     public void UpdatePlayerHand(Player player, Transform cardContainer)
@@ -47,6 +59,13 @@ public class UIManager : MonoBehaviour
         UpdatePlayerStatus(players[0], _player1StatusText);
         UpdatePlayerStatus(players[1], _player2StatusText);
         UpdatePlayerStatus(players[2], _player3StatusText);
+    }
+
+    public void UpdateAllScores(List<Player> players, Dictionary<Player, int> scores)
+    {
+        UpdatePlayerScore(players[0], scores[players[0]], _player1ScoreText);
+        UpdatePlayerScore(players[1], scores[players[1]], _player2ScoreText);
+        UpdatePlayerScore(players[2], scores[players[2]], _player3ScoreText);
     }
 
     public void UpdateAllHands(List<Player> players)
