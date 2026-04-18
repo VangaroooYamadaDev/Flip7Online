@@ -203,6 +203,8 @@ public class GameManager : MonoBehaviour
     public void DebugFold()
     {
         Fold();
+        _uiManager.UpdateAllStatuses(_players);
+        _uiManager.UpdateAllHands(_players);
         TurnFlow();
     }
 
