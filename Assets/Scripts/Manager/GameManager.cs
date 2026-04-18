@@ -70,6 +70,8 @@ public class GameManager : MonoBehaviour
         _uiManager.UpdateAllStatuses(_players);
         _uiManager.UpdateAllScores(_players, _scores);
         _uiManager.UpdateAllHands(_players);
+        _uiManager.UpdateTurnIndicator(_currentPlayerIndex);
+
     }
 
     public void DrawCard()
@@ -295,6 +297,8 @@ public class GameManager : MonoBehaviour
         {
             _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
         } while (!_players[_currentPlayerIndex].IsActive);
+
+        _uiManager.UpdateTurnIndicator(_currentPlayerIndex);
     }
 
     private void EndRound()
@@ -329,6 +333,7 @@ public class GameManager : MonoBehaviour
             _uiManager.UpdateAllStatuses(_players);
             _uiManager.UpdateAllScores(_players, _scores);
             _uiManager.UpdateAllHands(_players);
+            _uiManager.UpdateTurnIndicator(_currentPlayerIndex);
         }
     }
 }

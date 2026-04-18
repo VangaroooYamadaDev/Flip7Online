@@ -28,6 +28,14 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _player3ScoreText;
 
+    [SerializeField]
+    private GameObject _player1TurnIndicator;
+    [SerializeField]
+    private GameObject _player2TurnIndicator;
+    [SerializeField]
+    private GameObject _player3TurnIndicator;
+
+
     public void UpdatePlayerStatus(Player player, TextMeshProUGUI statusText)
     {
         statusText.text = $"{player.Name}: {player.Status}";
@@ -52,6 +60,13 @@ public class UIManager : MonoBehaviour
             GameObject cardObj = Instantiate(_cardUIPrefab, cardContainer);
             cardObj.GetComponent<CardUIView>().Setup(card);
         }
+    }
+
+    public void UpdateTurnIndicator(int currentPlayerIndex)
+    {
+        _player1TurnIndicator.SetActive(currentPlayerIndex==0);
+        _player2TurnIndicator.SetActive(currentPlayerIndex==1);
+        _player3TurnIndicator.SetActive(currentPlayerIndex==2);
     }
 
     public void UpdateAllStatuses(List<Player> players)
